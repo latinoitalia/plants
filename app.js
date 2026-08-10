@@ -629,6 +629,7 @@ function locateUser() {
 
   locateBtn.classList.add("loading-pulse");
 
+  // Start watching position
   gpsWatchId = navigator.geolocation.watchPosition(
     (position) => {
       const lat = position.coords.latitude;
@@ -638,6 +639,7 @@ function locateUser() {
       updateUserLocationMarker(lat, lng, accuracy);
 
       locateBtn.classList.remove("loading-pulse");
+      locateBtn.classList.add("highlight"); // Keep button highlighted while active
 
       // Check if user is in Villa Buri bounds (Rough boundary box)
       const isInsideBuri =
@@ -666,6 +668,22 @@ function locateUser() {
     },
     { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 },
   );
+}
+
+function stopLocatingUser() {
+  if (gpsWatchId) {
+    navigator.geolocation.clearWatch(gpsWatchId);
+    gpsWatchId = null;
+  }
+  if (userMarker) {
+    map.removeLayer(userMarker);
+    userMarker = null;
+  }
+  if (userAccuracyCircle) {
+    map.removeLayer(userAccuracyCircle);
+    userAccuracyCircle = null;
+  }
+  locateBtn.classList.remove("highlight", "loading-pulse");
 }
 
 function updateUserLocationMarker(lat, lng, accuracy) {
@@ -697,7 +715,11 @@ function updateUserLocationMarker(lat, lng, accuracy) {
 }
 
 locateBtn.addEventListener("click", () => {
-  locateUser();
+  if (gpsWatchId) {
+    stopLocatingUser();
+  } else {
+    locateUser();
+  }
 });
 
 // --- 9. Walk Simulation (For testability) ---
