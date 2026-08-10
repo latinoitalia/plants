@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Bosco Buri | Guida Botanica e Sfida Villa Buri</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Scopri ed esplora le meraviglie botaniche del Parco di Villa Buri a Verona. Tocca gli indicatori delle piante per scoprirne i dettagli, ascoltare la guida vocale e completare la caccia al tesoro."
+    />
+    <meta
+      name="keywords"
+      content="Villa Buri, Verona, mappa botanica, guida piante, caccia al tesoro, bosco buri, guida mobile"
+    />
+    <meta name="author" content="Bosco Buri Team" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <link rel="apple-touch-icon" href="assets/icon-192.png" />
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="light-mode">
+    <!-- App Shell -->
+    <div id="app-container">
+      <!-- Top HUD Interface -->
+      <header class="top-hud">
+        <div class="logo-area">
+          <div class="brand">
+            <i data-lucide="sprout" class="brand-icon"></i>
+            <h1>Bosco Buri</h1>
+          </div>
+          <button
+            id="theme-toggle"
+            class="hud-btn glass-btn"
+            aria-label="Toggle Theme"
+          >
+            <i data-lucide="moon"></i>
+          </button>
+        </div>
+
+        <!-- Search and Filter Bar -->
+        <div class="search-filter-container">
+          <div class="search-bar glass">
+            <i data-lucide="search" class="search-icon"></i>
+            <input
+              type="text"
+              id="plant-search"
+              placeholder="Cerca piante per nome, famiglia..."
+              aria-label="Cerca piante"
+            />
+            <button
+              id="clear-search"
+              class="clear-btn hidden"
+              aria-label="Cancella Ricerca"
+            >
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+
+          <div class="filter-wrapper">
+            <div class="filter-chips" id="filter-chips">
+              <button class="chip active" data-category="all">Tutti</button>
+              <button class="chip" data-category="trees">Alberi</button>
+              <button class="chip" data-category="flowers">Fiori</button>
+              <button class="chip" data-category="ferns">Felci</button>
+              <button class="chip" data-category="herbs">Erbe</button>
+              <button class="chip" data-category="exotics">Esotiche</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Map Area -->
+      <main
+        id="map"
+        aria-label="Interactive map of Villa Buri Park plants"
+      ></main>
+
+      <!-- Floating HUD Buttons (Right-side Actions) -->
+      <div class="floating-controls-right">
+        <button
+          id="quest-toggle"
+          class="floating-btn glass-btn"
+          aria-label="Flora Quest Checklist"
+        >
+          <div class="quest-progress-badge">0%</div>
+          <i data-lucide="trophy"></i>
+        </button>
+
+        <button
+          id="btn-simulate"
+          class="floating-btn glass-btn"
+          aria-label="Simulate Walk"
+        >
+          <i data-lucide="footprints"></i>
+        </button>
+
+        <button
+          id="btn-locate"
+          class="floating-btn glass-btn highlight"
+          aria-label="Find My Location"
+        >
+          <i data-lucide="navigation"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Swipe Bottom Sheet (Detail Drawer) -->
+      <div
+        id="detail-drawer"
+        class="drawer glass-drawer hidden"
+        role="dialog"
+        aria-labelledby="drawer-plant-name"
+      >
+        <div class="drawer-handle-bar">
+          <div class="drawer-handle"></div>
+        </div>
+
+        <!-- Drawer Content -->
+        <div class="drawer-content">
+          <!-- Header Peek Panel -->
+          <div class="drawer-header-peek">
+            <div class="header-main-info">
+              <h2 id="drawer-plant-name">Seleziona una Pianta</h2>
+              <p id="drawer-plant-scientific">
+                Tocca un marcatore per esplorare
+              </p>
+            </div>
+            <span class="rarity-badge" id="drawer-plant-rarity">Comune</span>
+          </div>
+
+          <!-- Body Detail Panel (Scrollable content) -->
+          <div class="drawer-body-details">
+            <!-- Image Section / Custom Card -->
+            <div class="plant-image-showcase">
+              <div id="plant-image-placeholder" class="plant-media-card">
+                <!-- Visual elements will be dynamically injected here -->
+                <div class="leaf-shadow-art">
+                  <i data-lucide="leaf" class="bg-leaf-icon"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Characteristics Stats Grid -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <i data-lucide="sun" class="stat-icon sun"></i>
+                <span class="stat-label">Luce Solare</span>
+                <span class="stat-value" id="stat-sun">Ombra Parziale</span>
+              </div>
+              <div class="stat-card">
+                <i data-lucide="droplet" class="stat-icon water"></i>
+                <span class="stat-label">Acqua</span>
+                <span class="stat-value" id="stat-water">Moderata</span>
+              </div>
+              <div class="stat-card">
+                <i data-lucide="ruler" class="stat-icon height"></i>
+                <span class="stat-label">Altezza Max</span>
+                <span class="stat-value" id="stat-height">2.5m</span>
+              </div>
+              <div class="stat-card">
+                <i data-lucide="globe" class="stat-icon origin"></i>
+                <span class="stat-label">Origine</span>
+                <span class="stat-value" id="stat-origin">Eurasia</span>
+              </div>
+            </div>
+
+            <!-- Detailed Descriptions -->
+            <div class="details-section">
+              <h3>Descrizione Botanica</h3>
+              <p id="drawer-plant-desc">
+                Un magnifico esemplare situato nei giardini storici di Villa
+                Buri. Tocca un indicatore sulla mappa per visualizzarne i
+                dettagli.
+              </p>
+            </div>
+
+            <!-- Fun Fact Box (Glass Highlight) -->
+            <div class="fun-fact-box">
+              <div class="fun-fact-header">
+                <i data-lucide="sparkles"></i>
+                <h4>Curiosità Botanica</h4>
+              </div>
+              <p id="drawer-plant-funfact">
+                Lo sapevi? Gli alberi di Bosco Buri comunicano tra loro
+                attraverso reti sotterranee di funghi!
+              </p>
+            </div>
+
+            <!-- Audio & Check-in Controls -->
+            <div class="drawer-actions-panel">
+              <button
+                id="btn-audio-guide"
+                class="action-btn secondary-action"
+                aria-label="Ascolta la guida audio"
+              >
+                <i data-lucide="volume-2" class="audio-icon"></i>
+                <span id="audio-btn-text">Ascolta la Guida</span>
+              </button>
+              <button
+                id="btn-checkin"
+                class="action-btn primary-action"
+                aria-label="Registra questa pianta"
+              >
+                <i data-lucide="check-circle-2"></i>
+                <span>Trovata! Registra</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scavenger Hunt / Quest Modal -->
+      <div
+        id="quest-modal"
+        class="modal-overlay hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="quest-modal-title"
+      >
+        <div class="modal-card glass">
+          <header class="modal-header">
+            <div class="modal-title-wrap">
+              <i data-lucide="compass" class="modal-title-icon"></i>
+              <h2 id="quest-modal-title">Sfida Bosco Buri</h2>
+            </div>
+            <button
+              id="close-quest"
+              class="close-modal-btn"
+              aria-label="Chiudi Finestra Sfida"
+            >
+              <i data-lucide="x"></i>
+            </button>
+          </header>
+
+          <div class="modal-body">
+            <div class="quest-summary-panel">
+              <p>
+                Esplora i sentieri di Bosco Buri e trova le 15 piante storiche
+                catalogate. Effettua la registrazione in ogni punto per
+                completare il percorso.
+              </p>
+              <div class="quest-progress-bar-container">
+                <div class="quest-progress-labels">
+                  <span>Progresso</span>
+                  <span id="quest-progress-text">0 / 15 Piante Trovate</span>
+                </div>
+                <div class="quest-progress-bar">
+                  <div id="quest-progress-fill" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="quest-checklist-wrapper">
+              <h3>Checklist Botanica</h3>
+              <ul id="quest-list" class="quest-list">
+                <!-- Dynamically populated checklist -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lucide Icon Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- App JS -->
+    <script src="app.js"></script>
+  </body>
+</html>
