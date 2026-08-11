@@ -139,63 +139,6 @@ const PLANTS_DATABASE = [
       "Un gioiello raro situato nel laghetto più riparato di Villa Buri. A differenza delle ninfee, il Loto svetta maestoso sopra la superficie dell'acqua, fiorendo in grandi e profumati petali rosa e bianchi che simboleggiano la purezza.",
   },
   {
-    id: "rhododendron",
-    name: "Rododendro Arboreo Rosso",
-    scientificName: "Rhododendron arboreum",
-    family: "Ericaceae",
-    category: "flowers",
-    rarity: "rare",
-    coordinates: [45.4204, 11.0419],
-    sunlight: "Ombra Dappolata",
-    water: "Moderata",
-    height: "6m",
-    nativeTo: "Himalaya",
-    image:
-      "https://images.unsplash.com/photo-1560717789-0ac7c58ac90a?auto=format&fit=crop&q=80&w=600",
-    funFact:
-      "Il Rhododendron arboreum è il fiore nazionale del Nepal, dove i suoi fiori freschi vengono usati per preparare bevande acidule tradizionali.",
-    description:
-      "Piantato all'ombra di pini secolari, questo grande arbusto sempreverde esplode in primavera in densi mazzi globosi di fiori rosso scarlatto, regalando uno spettacolo di colore indimenticabile.",
-  },
-  {
-    id: "sweet-violet",
-    name: "Viola Mammola Profumata",
-    scientificName: "Viola odorata",
-    family: "Violaceae",
-    category: "herbs",
-    rarity: "common",
-    coordinates: [45.4191, 11.0415],
-    sunlight: "Mezz'ombra",
-    water: "Moderata",
-    height: "0.15m",
-    nativeTo: "Europa e Mediterraneo",
-    image:
-      "https://images.unsplash.com/photo-1572917734563-718a221f7b88?auto=format&fit=crop&q=80&w=600",
-    funFact:
-      "I fiori della viola contengono ionone, una sostanza che anestetizza temporaneamente i recettori olfattivi. Puoi annusarli solo una volta prima che il profumo sembri svanire!",
-    description:
-      "Punteggia i prati ombrosi e il sottobosco di Bosco Buri. Questa piccola pianta erbacea perenne fiorisce a fine inverno con fiori viola intensamente profumati e graziose foglie a forma di cuore.",
-  },
-  {
-    id: "rosemary",
-    name: "Rosmarino Comune",
-    scientificName: "Salvia rosmarinus",
-    family: "Lamiaceae",
-    category: "herbs",
-    rarity: "common",
-    coordinates: [45.4199, 11.0432],
-    sunlight: "Sole Diretto",
-    water: "Molto Bassa",
-    height: "1.5m",
-    nativeTo: "Bacino del Mediterraneo",
-    image:
-      "https://images.unsplash.com/photo-1594056291689-d4c5520e03e4?auto=format&fit=crop&q=80&w=600",
-    funFact:
-      "Nell'antica Grecia, gli studenti indossavano ghirlande di rosmarino per stimolare la memoria e la concentrazione durante gli esami.",
-    description:
-      "Prospera a ridosso dei muretti soleggiati lungo i confini del parco. Questo arbusto aromatico sempreverde produce foglie aghiformi ricche di oli essenziali e delicati fiori azzurri, caposaldo della cucina italiana.",
-  },
-  {
     id: "magnolia",
     name: "Magnolia Grandiflora",
     scientificName: "Magnolia grandiflora",
@@ -213,25 +156,6 @@ const PLANTS_DATABASE = [
       "Le magnolie si sono evolute prima della comparsa delle api! I loro petali sono spessi e coriacei per resistere all'impollinazione da parte dei coleotteri.",
     description:
       "Domina il grande prato di fronte all'ingresso principale di Villa Buri. Questo splendido albero presenta foglie coriacee verde scuro lucido con pagina inferiore color ruggine e produce enormi fiori bianchi profumati in estate.",
-  },
-  {
-    id: "bald-cypress",
-    name: "Cipresso delle Paludi",
-    scientificName: "Taxodium distichum",
-    family: "Cupressaceae",
-    category: "trees",
-    rarity: "exotic",
-    coordinates: [45.4206, 11.0434],
-    sunlight: "Sole Diretto",
-    water: "Alta (Saturata)",
-    height: "30m",
-    nativeTo: "Zone umide del Nord America",
-    image:
-      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&q=80&w=600",
-    funFact:
-      "Il cipresso delle paludi sviluppa radici aeree legnose chiamate 'pneumatofori' (o ginocchi) che emergono dall'acqua per far respirare la pianta.",
-    description:
-      "Cresce rigoglioso lungo le sponde umide del fiume Adige che lambisce Bosco Buri. Questo maestoso albero è una conifera insolita in quanto decidua: perde le sue foglie aghiformi e soffici in inverno, che in autunno si tingono di un rosso ruggine spettacolare.",
   },
 ];
 
