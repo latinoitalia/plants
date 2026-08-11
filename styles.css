@@ -91,6 +91,7 @@ body {
 #map {
   flex-grow: 1;
   width: 100%;
+  min-height: 0; /* Fix for Safari/iOS flexbox height calculation bug */
   z-index: 1;
   background-color: var(--bg-app);
 }
