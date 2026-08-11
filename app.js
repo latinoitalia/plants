@@ -17,50 +17,29 @@ const PLANTS_DATABASE = [
     water: "Moderata",
     height: "30m",
     nativeTo: "Europa e Asia Occidentale",
-    image:
-      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&q=80&w=600",
+    image: "sequoia600.png",
     funFact:
       "A fronte di altezze che superano i 110 metri e volumi del tronco immensi, le sequoie non hanno una radice fittonante profonda.",
     description:
       "Specie naturalizzata. Appartiene alla famiglia delle Cupressaceae. Le foglie simili ai denti di un pettine sono disposte in rametti piatti. I piccoli coni si presentano arrotondati o allungati. La corteccia è molto spessa, fibrosa e molto morbida, adatta a contrastare gli incendi tipici della zona d'origine, Californa e Oregon.",
   },
   {
-    id: "ginkgo",
-    name: "Ginkgo Dorato",
-    scientificName: "Ginkgo biloba",
-    family: "Ginkgoaceae",
-    category: "trees",
-    rarity: "rare",
-    coordinates: [45.4201, 11.0412],
-    sunlight: "Sole o Mezz'ombra",
-    water: "Moderata",
-    height: "25m",
-    nativeTo: "Cina",
-    image:
-      "https://images.unsplash.com/photo-1605333396915-47ed6b68a00e?auto=format&fit=crop&q=80&w=600",
-    funFact:
-      "Il Ginkgo biloba è un 'fossile vivente', rimasto praticamente immutato da oltre 200 milioni di anni. Non ha parenti stretti sopravvissuti.",
-    description:
-      "Situato vicino al sentiero del giardino della villa, questo Ginkgo è famoso per le sue foglie a ventaglio che in tardo autunno assumono un colore giallo dorato uniforme e spettacolare. È una pianta molto resistente e celebrata in tutto il mondo per le sue proprietà officinali e la sua longevità.",
-  },
-  {
-    id: "white-waterlily",
-    name: "Ninfea Bianca Comune",
-    scientificName: "Nymphaea alba",
-    family: "Nymphaeaceae",
+    id: "01",
+    name: "Canna D'India",
+    scientificName: "Canna indica",
+    family: "Cannaceae",
     category: "flowers",
     rarity: "common",
-    coordinates: [45.4189, 11.0425],
+    coordinates: [45.419603, 11.040126],
     sunlight: "Sole Diretto",
-    water: "Alta (Acquatica)",
-    height: "Galleggiante",
-    nativeTo: "Europa e Nord Africa",
-    image:
-      "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&q=80&w=600",
+    water: "Moderata",
+    height: "1.5m",
+    nativeTo: "America Tropicale",
+    image: "cannadindia600.png",
     funFact:
-      "I fiori si aprono solo durante le ore di sole e si chiudono ermeticamente di notte o quando il cielo è molto coperto.",
+      "i fiori della Canna sono ermafroditi e attraggono farfalle e colibrì per l'impollinazione. Le foglie possono essere utilizzate per avvolgere cibi in alcune culture.",
     description:
-      "Fluttuando elegantemente sulla superficie dello storico laghetto della villa, queste ninfee presentano grandi foglie verdi circolari e grandi fiori bianchi dai petali multipli con un centro giallo brillante. Forniscono ombra e riparo alla vita acquatica del laghetto.",
+      "Questa pianta tropicale è nota per i suoi grandi fiori colorati e le foglie decorative. Fiorisce in estate e autunno, aggiungendo un tocco esotico al giardino di Villa Buri. Le sue radici tuberose possono essere utilizzate come alimento in alcune culture.",
   },
   {
     id: "wild-lavender",
@@ -69,7 +48,7 @@ const PLANTS_DATABASE = [
     family: "Lamiaceae",
     category: "herbs",
     rarity: "common",
-    coordinates: [45.4203, 11.0428],
+    coordinates: [45.4203, 11.05],
     sunlight: "Sole Diretto",
     water: "Bassa",
     height: "1m",
@@ -111,6 +90,7 @@ let activeMarkerId = null;
 let userMarker = null;
 let userAccuracyCircle = null;
 let isDarkTheme = false;
+let isFirstLocationUpdate = true;
 let visitedPlants = JSON.parse(
   localStorage.getItem("florafind_visited") || "[]",
 );
@@ -506,7 +486,10 @@ function locateUser() {
           "Sembra che tu sia al di fuori dell'area del parco di Bosco Buri. La localizzazione funzionerà correttamente quando sarai all'interno del parco.",
         );
       } else {
-        map.setView([lat, lng], 17, { animate: true });
+        if (isFirstLocationUpdate) {
+          map.setView([lat, lng], 17, { animate: true });
+          isFirstLocationUpdate = false;
+        }
       }
     },
     (error) => {
@@ -522,6 +505,7 @@ function stopLocatingUser() {
   if (gpsWatchId) {
     navigator.geolocation.clearWatch(gpsWatchId);
     gpsWatchId = null;
+    isFirstLocationUpdate = true; // Reset for the next time
   }
   if (userMarker) {
     map.removeLayer(userMarker);

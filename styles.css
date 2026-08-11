@@ -626,7 +626,8 @@ body.light-mode .glass-drawer {
 
 .plant-media-card {
   width: 100%;
-  height: 180px;
+  aspect-ratio: 16 / 9; /* Mantiene una proporzione widescreen costante */
+  height: auto; /* L'altezza si adatterà alla larghezza per mantenere l'aspect-ratio */
   border-radius: var(--radius-md);
   position: relative;
   overflow: hidden;
@@ -642,7 +643,7 @@ body.light-mode .glass-drawer {
 .plant-media-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Mostra l'intera immagine senza ritagliarla */
 }
 
 .leaf-shadow-art {
@@ -1145,6 +1146,6 @@ body.light-mode .quest-item {
   }
 
   .plant-media-card {
-    height: 220px;
+    aspect-ratio: 16 / 9; /* Mantiene la proporzione anche su desktop */
   }
 }
