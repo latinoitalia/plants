@@ -63,25 +63,6 @@ const PLANTS_DATABASE = [
       "Fluttuando elegantemente sulla superficie dello storico laghetto della villa, queste ninfee presentano grandi foglie verdi circolari e grandi fiori bianchi dai petali multipli con un centro giallo brillante. Forniscono ombra e riparo alla vita acquatica del laghetto.",
   },
   {
-    id: "japanese-maple",
-    name: "Acero Giapponese Rosso",
-    scientificName: "Acer palmatum",
-    family: "Sapindaceae",
-    category: "trees",
-    rarity: "rare",
-    coordinates: [45.4196, 11.0418],
-    sunlight: "Luce Filtrata",
-    water: "Da Moderata ad Alta",
-    height: "8m",
-    nativeTo: "Giappone e Corea",
-    image:
-      "https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&q=80&w=600",
-    funFact:
-      "Il termine giapponese 'Momiji' significa 'mani di neonato', in riferimento ai lobi delicati delle sue foglie.",
-    description:
-      "Un capolavoro ornamentale piantato nei giardini della villa, questo acero giapponese crea un contrasto sorprendente grazie al suo fogliame delicato e finemente intagliato che si accende di rosso cremisi in primavera e in autunno.",
-  },
-  {
     id: "wild-lavender",
     name: "Lavanda Officinale",
     scientificName: "Lavandula angustifolia",
@@ -99,44 +80,6 @@ const PLANTS_DATABASE = [
       "L'olio essenziale di lavanda è noto per le sei proprietà calmanti ed è ampiamente utilizzato in aromaterapia per ridurre ansia e stress.",
     description:
       "Forma profumate siepi di confine nei giardini delle erbe di Villa Buri. Questa lavanda attira sciami di api e farfalle grazie alle sue dense spighe di fiori viola dal profumo dolcissimo e alle sue foglie grigio-verdi lineari.",
-  },
-  {
-    id: "common-box",
-    name: "Bosso Comune Sempreverde",
-    scientificName: "Buxus sempervirens",
-    family: "Buxaceae",
-    category: "trees",
-    rarity: "common",
-    coordinates: [45.4194, 11.0402],
-    sunlight: "Sole o Mezz'ombra",
-    water: "Moderata",
-    height: "4m",
-    nativeTo: "Europa Meridionale e Africa",
-    image:
-      "https://images.unsplash.com/photo-1597055181300-e3633a207518?auto=format&fit=crop&q=80&w=600",
-    funFact:
-      "Il legno di bosso è estremamente denso e pesante, tanto da affondare nell'acqua. Storicamente veniva usato per intagliare strumenti musicali di pregio.",
-    description:
-      "Utilizzato per creare le geometrie forali e le sfere topiaria nello storico giardino all'italiana della villa. È un arbusto sempreverde a crescita lenta con piccole foglie ovali lucide.",
-  },
-  {
-    id: "sacred-lotus",
-    name: "Loto Sacro Imperiale",
-    scientificName: "Nelumbo nucifera",
-    family: "Nelumbonaceae",
-    category: "flowers",
-    rarity: "exotic",
-    coordinates: [45.4186, 11.0421],
-    sunlight: "Sole Diretto",
-    water: "Alta (Palustre)",
-    height: "1.5m",
-    nativeTo: "Asia Tropicale",
-    image:
-      "https://images.unsplash.com/photo-1444492417251-a58397a66735?auto=format&fit=crop&q=80&w=600",
-    funFact:
-      "Le foglie di loto presentano l'effetto loto: una superidrofobicità per cui le gocce d'acqua scivolano via trascinando con sé lo sporco.",
-    description:
-      "Un gioiello raro situato nel laghetto più riparato di Villa Buri. A differenza delle ninfee, il Loto svetta maestoso sopra la superficie dell'acqua, fiorendo in grandi e profumati petali rosa e bianchi che simboleggiano la purezza.",
   },
   {
     id: "magnolia",
@@ -178,32 +121,12 @@ let currentCategory = "all";
 let speechUtterance = null;
 let isSpeaking = false;
 
-// Geolocation Walk Simulation variables
-let isSimulating = false;
-let simulationInterval = null;
-let simStepIndex = 0;
-const SIMULATION_ROUTE = [
-  [45.4187, 11.0402], // Gate
-  [45.419, 11.0406], // Near Magnolia
-  [45.4193, 11.0408], // Oak path
-  [45.4196, 11.0415], // Near Japanese Maple
-  [45.42, 11.0412], // Near Ginkgo
-  [45.4205, 11.041], // Near Maidenhair
-  [45.4209, 11.0403], // Near Hart's Tongue
-  [45.4214, 11.0415], // Near Plume Poppy
-  [45.4207, 11.0432], // Near Cypress
-  [45.4199, 11.0431], // Near Rosemary
-  [45.4192, 11.0425], // Near Water Lily
-  [45.4187, 11.0421], // Near Lotus
-];
-
 // --- 3. DOM Elements ---
 const searchInput = document.getElementById("plant-search");
 const clearSearchBtn = document.getElementById("clear-search");
 const chipsContainer = document.getElementById("filter-chips");
 const themeToggle = document.getElementById("theme-toggle");
 const locateBtn = document.getElementById("btn-locate");
-const simulateBtn = document.getElementById("btn-simulate");
 const questToggle = document.getElementById("quest-toggle");
 const questModal = document.getElementById("quest-modal");
 const closeQuestBtn = document.getElementById("close-quest");
@@ -578,26 +501,18 @@ function locateUser() {
       const isInsideBuri =
         lat >= 45.414 && lat <= 45.425 && lng >= 11.033 && lng <= 11.049;
 
-      if (!isInsideBuri && !isSimulating) {
-        // Show simulated dialog
+      if (!isInsideBuri) {
         alert(
-          "Ti trovi al di fuori del parco di Bosco Buri (Verona, Italia). Avvio di una passeggiata virtuale simulata per testare le funzionalità dell'app!",
+          "Sembra che tu sia al di fuori dell'area del parco di Bosco Buri. La localizzazione funzionerà correttamente quando sarai all'interno del parco.",
         );
-        startWalkSimulation();
-      } else if (!isSimulating) {
-        // Center on user if they are in the park
+      } else {
         map.setView([lat, lng], 17, { animate: true });
       }
     },
     (error) => {
       console.warn("GPS tracking error: ", error.message);
       locateBtn.classList.remove("loading-pulse");
-      if (!isSimulating) {
-        alert(
-          "Impossibile accedere al GPS. Avvio della passeggiata virtuale simulata!",
-        );
-        startWalkSimulation();
-      }
+      alert("Impossibile accedere alla tua posizione GPS.");
     },
     { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 },
   );
@@ -654,83 +569,6 @@ locateBtn.addEventListener("click", () => {
     locateUser();
   }
 });
-
-// --- 9. Walk Simulation (For testability) ---
-function startWalkSimulation() {
-  if (isSimulating) {
-    stopWalkSimulation();
-    return;
-  }
-
-  isSimulating = true;
-  simulateBtn.classList.add("active-sim");
-  simStepIndex = 0;
-
-  // Set simulator coordinates initially
-  const startLoc = SIMULATION_ROUTE[simStepIndex];
-  updateUserLocationMarker(startLoc[0], startLoc[1], 15);
-  map.setView(startLoc, 17, { animate: true });
-
-  simulationInterval = setInterval(() => {
-    simStepIndex = (simStepIndex + 1) % SIMULATION_ROUTE.length;
-    const currentPos = SIMULATION_ROUTE[simStepIndex];
-
-    updateUserLocationMarker(currentPos[0], currentPos[1], 10);
-    map.setView(currentPos, 17, { animate: true });
-
-    // Check if any plants are nearby (within 35 meters)
-    checkNearbyPlants(currentPos[0], currentPos[1]);
-  }, 4000);
-}
-
-function stopWalkSimulation() {
-  isSimulating = false;
-  simulateBtn.classList.remove("active-sim");
-  if (simulationInterval) {
-    clearInterval(simulationInterval);
-    simulationInterval = null;
-  }
-}
-
-simulateBtn.addEventListener("click", () => {
-  startWalkSimulation();
-});
-
-function calculateDistance(lat1, lon1, lat2, lon2) {
-  // Haversine formula to compute distance in meters
-  const R = 6371e3; // metres
-  const phi1 = (lat1 * Math.PI) / 180;
-  const phi2 = (lat2 * Math.PI) / 180;
-  const deltaPhi = ((lat2 - lat1) * Math.PI) / 180;
-  const deltaLambda = ((lon2 - lon1) * Math.PI) / 180;
-
-  const a =
-    Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
-    Math.cos(phi1) *
-      Math.cos(phi2) *
-      Math.sin(deltaLambda / 2) *
-      Math.sin(deltaLambda / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-  return R * c; // in metres
-}
-
-function checkNearbyPlants(userLat, userLng) {
-  PLANTS_DATABASE.forEach((plant) => {
-    const dist = calculateDistance(
-      userLat,
-      userLng,
-      plant.coordinates[0],
-      plant.coordinates[1],
-    );
-
-    // If user is within 30 meters, highlight it
-    if (dist < 30) {
-      // Auto-trigger plant selection as they "walk past" it
-      selectPlant(plant);
-    }
-  });
-}
 
 // --- 10. Text-to-Speech Engine (Audio Guide) ---
 function speakText(text) {
