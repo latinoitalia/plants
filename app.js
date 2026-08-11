@@ -452,11 +452,11 @@ let isDragging = false;
 let drawerStartTranslateY = 0;
 
 function openDrawer() {
-  drawer.classList.remove("hidden");
+  drawer.classList.remove("hidden", "peek", "full"); // Pulisce sempre le classi di stato
   if (window.innerWidth > 768) {
-    drawer.className = "drawer glass-drawer full";
+    drawer.classList.add("full");
   } else {
-    drawer.className = "drawer glass-drawer peek";
+    drawer.classList.add("peek");
   }
 }
 
@@ -464,6 +464,15 @@ function closeDrawer() {
   drawer.classList.remove("peek", "full");
   drawer.classList.add("hidden");
   stopSpeech();
+
+  // Crucial fix: Also reset the active marker state when closing the drawer.
+  // This prevents the map click from immediately re-selecting the same marker.
+  if (activeMarkerId) {
+    const prevEl = document.querySelector(`.plant-id-${activeMarkerId}`);
+    if (prevEl) prevEl.classList.remove("active-marker");
+    activeMarkerId = null;
+    selectedPlant = null;
+  }
 }
 
 // Mobile-only Touch Gesture Listeners

@@ -91,7 +91,6 @@ body {
 #map {
   flex-grow: 1;
   width: 100%;
-  height: 100%;
   z-index: 1;
   background-color: var(--bg-app);
 }
@@ -521,7 +520,7 @@ body.light-mode .glass-drawer {
 }
 
 .drawer.full {
-  height: 33.33vh; /* Set an explicit height */
+  height: 65vh; /* Set an explicit height */
   transform: translateY(0%); /* Slide it fully into view */
 }
 
@@ -1102,6 +1101,11 @@ body.light-mode .quest-item {
   .drawer {
     left: 20px;
     right: 20px;
+  }
+  
+  .drawer:not(.full) {
+    /* Assicura che il drawer si nasconda quando non è in stato 'full' su desktop */
+    transform: translateY(100%);
   }
 
   .drawer-handle-bar {
