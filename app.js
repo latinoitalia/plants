@@ -17,7 +17,7 @@ const PLANTS_DATABASE = [
     water: "Moderata",
     height: "30m",
     nativeTo: "Europa e Asia Occidentale",
-    image: "sequoia600.png",
+    image: "sequoiaai.png",
     funFact:
       "A fronte di altezze che superano i 110 metri e volumi del tronco immensi, le sequoie non hanno una radice fittonante profonda.",
     description:
@@ -35,7 +35,7 @@ const PLANTS_DATABASE = [
     water: "Moderata",
     height: "1.5m",
     nativeTo: "America Tropicale",
-    image: "cannadindia600.png",
+    image: "cannaindica.png",
     funFact:
       "i fiori della Canna sono ermafroditi e attraggono farfalle e colibrì per l'impollinazione. Le foglie possono essere utilizzate per avvolgere cibi in alcune culture.",
     description:
@@ -48,7 +48,7 @@ const PLANTS_DATABASE = [
     family: "Lamiaceae",
     category: "herbs",
     rarity: "common",
-    coordinates: [45.4203, 11.05],
+    coordinates: [45.4203, 11.04],
     sunlight: "Sole Diretto",
     water: "Bassa",
     height: "1m",
@@ -72,12 +72,29 @@ const PLANTS_DATABASE = [
     water: "Moderata",
     height: "20m",
     nativeTo: "Stati Uniti Sud-orientali",
-    image:
-      "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?auto=format&fit=crop&q=80&w=600",
+    image: "magnolia.png",
     funFact:
       "Le magnolie si sono evolute prima della comparsa delle api! I loro petali sono spessi e coriacei per resistere all'impollinazione da parte dei coleotteri.",
     description:
       "Domina il grande prato di fronte all'ingresso principale di Villa Buri. Questo splendido albero presenta foglie coriacee verde scuro lucido con pagina inferiore color ruggine e produce enormi fiori bianchi profumati in estate.",
+  },
+  {
+    id: "38",
+    name: "Cedro",
+    scientificName: "Cedrus deodara",
+    family: "Pinaceae",
+    category: "trees",
+    rarity: "common",
+    coordinates: [45.420402, 11.042141],
+    sunlight: "Sole o Mezz'ombra",
+    water: "Moderata",
+    height: "30m",
+    nativeTo: "Stati Uniti Sud-orientali",
+    image: "cedro.png",
+    funFact:
+      "I cedri sono spesso utilizzati come alberi ornamentali nei parchi e nei giardini per la loro maestosità e resistenza. La loro legna è nota per il suo profumo aromatico e la sua durabilità.",
+    description:
+      "Specie ornamentale esotica, originaria del Medio Oriente. Appartiene alla famiglia delle Pinaceae. Utilizzata nei parchi per la sua imponenza e resistenza. Simbolo di longevità.",
   },
 ];
 
