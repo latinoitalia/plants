@@ -815,12 +815,33 @@ themeToggle.addEventListener("click", () => {
   updateMapTileLayer();
 });
 
+// --- 13. Deep Linking ---
+function handleDeepLink() {
+  const hash = window.location.hash;
+  if (hash) {
+    // Rimuove il carattere '#' per ottenere l'ID pulito (es. da '#magnolia' a 'magnolia')
+    const plantId = hash.substring(1);
+    const plant = PLANTS_DATABASE.find((p) => p.id === plantId);
+
+    if (plant) {
+      // Seleziona la pianta dopo un breve ritardo per assicurarsi che la mappa sia completamente inizializzata
+      setTimeout(() => {
+        selectPlant(plant);
+      }, 500);
+    }
+  }
+}
+
 // Close drawer if clicking empty areas of the map
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
   renderMarkers();
   initQuestTracker();
+  handleDeepLink(); // Controlla se c'è un link diretto a una pianta
   lucide.createIcons();
+
+  // Ascolta le modifiche all'hash per aggiornare la selezione della pianta dinamicamente
+  window.addEventListener("hashchange", handleDeepLink);
 
   map.on("click", (e) => {
     // If user clicks on map (not a marker) close the drawer
