@@ -126,7 +126,7 @@ const PLANTS_DATABASE = [
     water: "Bassa",
     height: ">30m",
     nativeTo: "Area Mediterranea",
-    image: "pinus-pinea.png",
+    image: "pino.png",
     funFact:
       "I suoi semi, i pinoli, sono un ingrediente pregiato in molte cucine mediterranee, dal pesto alla pasticceria.",
     description:
@@ -144,7 +144,7 @@ const PLANTS_DATABASE = [
     water: "Moderata",
     height: ">25m",
     nativeTo: "Ibrido (Europa)",
-    image: "platanus.png",
+    image: "platano.png",
     funFact:
       "La sua corteccia si sfalda in placche, creando un caratteristico aspetto 'mimetico'. È uno degli alberi più resistenti all'inquinamento urbano.",
     description:
