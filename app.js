@@ -96,6 +96,60 @@ const PLANTS_DATABASE = [
     description:
       "Specie ornamentale esotica, originaria del Medio Oriente. Appartiene alla famiglia delle Pinaceae. Utilizzata nei parchi per la sua imponenza e resistenza. Simbolo di longevità.",
   },
+  {
+    id: "331",
+    name: "Cedro dell'Himalaya",
+    scientificName: "Cedrus deodara",
+    family: "Pinaceae",
+    category: "exotics",
+    rarity: "rare",
+    coordinates: [45.419687, 11.040851],
+    sunlight: "Sole Diretto",
+    water: "Bassa",
+    height: "30m",
+    nativeTo: "Asia (Himalaya)",
+    image: "cedro.png",
+    funFact:
+      "Il suo nome 'Deodara' deriva dal sanscrito e significa 'legno degli dei', sottolineando la sua importanza culturale e spirituale nelle regioni d'origine.",
+    description:
+      "Specie esotica ornamentale originaria dell’Asia. Appartiene alla famiglia delle Pinaceae. Questo esemplare ha un tronco con un diametro di 128 cm. Apprezzata per il portamento elegante e la resistenza, è utilizzata in parchi e grandi giardini.",
+  },
+  {
+    id: "330",
+    name: "Pino Domestico",
+    scientificName: "Pinus pinea",
+    family: "Pinaceae",
+    category: "trees",
+    rarity: "common",
+    coordinates: [45.419586, 11.040746],
+    sunlight: "Sole Diretto",
+    water: "Bassa",
+    height: ">30m",
+    nativeTo: "Area Mediterranea",
+    image: "pinus-pinea.png",
+    funFact:
+      "I suoi semi, i pinoli, sono un ingrediente pregiato in molte cucine mediterranee, dal pesto alla pasticceria.",
+    description:
+      "Specie di entità indigena dell’area mediterranea. Appartiene alla famiglia delle Pinaceae. Questo esemplare ha un tronco con un diametro di 86 cm. Diffuso per la produzione dei pinoli e per l’ombra in ambienti urbani. Caratteristico delle pinete costiere.",
+  },
+  {
+    id: "platano",
+    name: "Platano Comune",
+    scientificName: "Platanus × acerifolia",
+    family: "Platanaceae",
+    category: "trees",
+    rarity: "common",
+    coordinates: [45.420223, 11.036481],
+    sunlight: "Sole Diretto",
+    water: "Moderata",
+    height: ">25m",
+    nativeTo: "Ibrido (Europa)",
+    image: "platanus.png",
+    funFact:
+      "La sua corteccia si sfalda in placche, creando un caratteristico aspetto 'mimetico'. È uno degli alberi più resistenti all'inquinamento urbano.",
+    description:
+      "Specie ibrida molto comune nei viali e parchi cittadini per la sua resistenza e l'ampia ombra che offre. Le sue grandi foglie palmate assomigliano a quelle dell'acero, da cui il nome 'acerifolia'.",
+  },
 ];
 
 // --- 2. State Variables ---
@@ -153,11 +207,11 @@ const checkinBtn = document.getElementById("btn-checkin");
 
 // --- 4. Map Initialization ---
 function initMap() {
-  const centerCoord = [45.4198, 11.0413]; // Center of Villa Buri Park
+  const centerCoord = [45.4198, 11.0411]; // Center of Villa Buri Park
 
   // Set bounds to Bosco Buri area
-  const southWest = L.latLng(45.415, 11.034);
-  const northEast = L.latLng(45.424, 11.048);
+  const southWest = L.latLng(45.415, 11.033);
+  const northEast = L.latLng(45.424, 11.047);
   const bounds = L.latLngBounds(southWest, northEast);
 
   map = L.map("map", {
@@ -177,6 +231,7 @@ function updateMapTileLayer() {
     map.removeLayer(currentTileLayer);
   }
 
+  // Ripristino degli stili mappa CARTO (Stamen non è più gratuito)
   const lightTiles =
     "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png";
   const darkTiles =
