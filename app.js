@@ -143,11 +143,11 @@ const PLANTS_DATABASE = [
     water: "Alta",
     height: ">30m",
     nativeTo: "Europa e Asia",
-    image: "pioppo_nero.png",
+    image: "pioppo1.jfif",
     funFact:
       "Il pioppo nero è una delle specie arboree a più rapida crescita in Europa. Il suo legno leggero è stato storicamente utilizzato per produrre zoccoli e fiammiferi.",
     description:
-      "Albero imponente tipico delle zone umide e dei corsi d'acqua. Ha una corteccia scura e profondamente fessurata negli esemplari adulti e foglie a forma di diamante. Svolge un ruolo ecologico importante stabilizzando le rive dei fiumi.",
+      "Albero imponente 200 anni di vita, tipico delle zone umide e dei corsi d'acqua. Ha una corteccia scura e profondamente fessurata negli esemplari adulti e foglie a forma di diamante. Svolge un ruolo ecologico importante stabilizzando le rive dei fiumi.",
   },
   {
     id: "pioppo-nero-2",
@@ -161,11 +161,11 @@ const PLANTS_DATABASE = [
     water: "Alta",
     height: ">30m",
     nativeTo: "Europa e Asia",
-    image: "pioppo_nero.png",
+    image: "pioppo2.jfif",
     funFact:
       "Il pioppo nero è una delle specie arboree a più rapida crescita in Europa. Il suo legno leggero è stato storicamente utilizzato per produrre zoccoli e fiammiferi.",
     description:
-      "Albero imponente tipico delle zone umide e dei corsi d'acqua. Ha una corteccia scura e profondamente fessurata negli esemplari adulti e foglie a forma di diamante. Svolge un ruolo ecologico importante stabilizzando le rive dei fiumi.",
+      "Albero imponente tipico delle zone umide e dei corsi d'acqua. Ha una corteccia scura e profondamente fessurata negli esemplari adulti e foglie a forma di diamante. Svolge un ruolo ecologico importante stabilizzando le rive dei fiumi. Purtroppo è stato acceso un fuoco nel suo interno, ma per fortuna è sopravissuto",
   },
   {
     id: "alloro",
@@ -179,7 +179,7 @@ const PLANTS_DATABASE = [
     water: "Bassa",
     height: "<10m",
     nativeTo: "Regione Mediterranea",
-    image: "alloro.png",
+    image: "alloro.jfif",
     funFact:
       "Le sue foglie venivano usate nell'antichità per creare corone per poeti e vincitori, simbolo di saggezza e gloria.",
     description:
