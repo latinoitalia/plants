@@ -42,25 +42,6 @@ const PLANTS_DATABASE = [
       "Questa pianta tropicale è nota per i suoi grandi fiori colorati e le foglie decorative. Fiorisce in estate e autunno, aggiungendo un tocco esotico al giardino di Villa Buri. Le sue radici tuberose possono essere utilizzate come alimento in alcune culture.",
   },
   {
-    id: "wild-lavender",
-    name: "Lavanda Officinale",
-    scientificName: "Lavandula angustifolia",
-    family: "Lamiaceae",
-    category: "herbs",
-    rarity: "common",
-    coordinates: [45.4203, 11.04],
-    sunlight: "Sole Diretto",
-    water: "Bassa",
-    height: "1m",
-    nativeTo: "Regione Mediterranea",
-    image:
-      "https://images.unsplash.com/photo-1528183429752-a97d0bf99b5a?auto=format&fit=crop&q=80&w=600",
-    funFact:
-      "L'olio essenziale di lavanda è noto per le sei proprietà calmanti ed è ampiamente utilizzato in aromaterapia per ridurre ansia e stress.",
-    description:
-      "Forma profumate siepi di confine nei giardini delle erbe di Villa Buri. Questa lavanda attira sciami di api e farfalle grazie alle sue dense spighe di fiori viola dal profumo dolcissimo e alle sue foglie grigio-verdi lineari.",
-  },
-  {
     id: "magnolia",
     name: "Magnolia Grandiflora",
     scientificName: "Magnolia grandiflora",
@@ -103,7 +84,7 @@ const PLANTS_DATABASE = [
     family: "Pinaceae",
     category: "exotics",
     rarity: "rare",
-    coordinates: [45.419687, 11.040851],
+    coordinates: [45.41963, 11.040851],
     sunlight: "Sole Diretto",
     water: "Bassa",
     height: "30m",
@@ -149,6 +130,60 @@ const PLANTS_DATABASE = [
       "La sua corteccia si sfalda in placche, creando un caratteristico aspetto 'mimetico'. È uno degli alberi più resistenti all'inquinamento urbano.",
     description:
       "Specie ibrida molto comune nei viali e parchi cittadini per la sua resistenza e l'ampia ombra che offre. Le sue grandi foglie palmate assomigliano a quelle dell'acero, da cui il nome 'acerifolia'.",
+  },
+  {
+    id: "pioppo-nero",
+    name: "Pioppo Nero",
+    scientificName: "Populus nigra",
+    family: "Salicaceae",
+    category: "trees",
+    rarity: "common",
+    coordinates: [45.420385, 11.037437],
+    sunlight: "Sole Diretto",
+    water: "Alta",
+    height: ">30m",
+    nativeTo: "Europa e Asia",
+    image: "pioppo_nero.png",
+    funFact:
+      "Il pioppo nero è una delle specie arboree a più rapida crescita in Europa. Il suo legno leggero è stato storicamente utilizzato per produrre zoccoli e fiammiferi.",
+    description:
+      "Albero imponente tipico delle zone umide e dei corsi d'acqua. Ha una corteccia scura e profondamente fessurata negli esemplari adulti e foglie a forma di diamante. Svolge un ruolo ecologico importante stabilizzando le rive dei fiumi.",
+  },
+  {
+    id: "pioppo-nero-2",
+    name: "Pioppo Nero",
+    scientificName: "Populus nigra",
+    family: "Salicaceae",
+    category: "trees",
+    rarity: "common",
+    coordinates: [45.420462, 11.037612],
+    sunlight: "Sole Diretto",
+    water: "Alta",
+    height: ">30m",
+    nativeTo: "Europa e Asia",
+    image: "pioppo_nero.png",
+    funFact:
+      "Il pioppo nero è una delle specie arboree a più rapida crescita in Europa. Il suo legno leggero è stato storicamente utilizzato per produrre zoccoli e fiammiferi.",
+    description:
+      "Albero imponente tipico delle zone umide e dei corsi d'acqua. Ha una corteccia scura e profondamente fessurata negli esemplari adulti e foglie a forma di diamante. Svolge un ruolo ecologico importante stabilizzando le rive dei fiumi.",
+  },
+  {
+    id: "alloro",
+    name: "Alloro",
+    scientificName: "Laurus nobilis",
+    family: "Lauraceae",
+    category: "herbs",
+    rarity: "common",
+    coordinates: [45.421091, 11.041863],
+    sunlight: "Sole o Mezz'ombra",
+    water: "Bassa",
+    height: "<10m",
+    nativeTo: "Regione Mediterranea",
+    image: "alloro.png",
+    funFact:
+      "Le sue foglie venivano usate nell'antichità per creare corone per poeti e vincitori, simbolo di saggezza e gloria.",
+    description:
+      "Arbusto sempreverde aromatico, tipico della macchia mediterranea. Le sue foglie lucide e coriacee sono ampiamente utilizzate in cucina per insaporire piatti. Può crescere come un piccolo albero se non potato.",
   },
 ];
 

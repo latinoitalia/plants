@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generatore QR Code Interattivo</title>
+    <!-- Libreria per la generazione del QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+      }
+      body {
+        background-color: #f4f6f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+      }
+      .card {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
+      h2 {
+        margin-top: 0;
+        color: #1a1a1a;
+        font-size: 1.5rem;
+      }
+      .input-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        color: #555;
+        font-weight: 600;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      input[type="text"]:focus {
+        border-color: #0066cc;
+      }
+      #qrcode-container {
+        margin: 20px auto;
+        padding: 15px;
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        display: inline-block;
+        min-width: 158px;
+        min-height: 158px;
+      }
+      #qrcode img {
+        margin: 0 auto;
+      }
+      .btn-download {
+        background-color: #0066cc;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+        display: none;
+        transition: background-color 0.2s;
+      }
+      .btn-download:hover {
+        background-color: #0052a3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Generatore QR Code</h2>
+
+      <div class="input-group">
+        <label for="text-input">Inserisci testo o URL:</label>
+        <input
+          type="text"
+          id="text-input"
+          placeholder="https://esempio.it"
+          oninput="generateQRCode()"
+        />
+      </div>
+
+      <div id="qrcode-container">
+        <div id="qrcode"></div>
+      </div>
+
+      <button id="download-btn" class="btn-download" onclick="downloadQRCode()">
+        Scarica Immagine (PNG)
+      </button>
+    </div>
+
+    <script>
+      let qrcode = new QRCode(document.getElementById("qrcode"), {
+        width: 200,
+        height: 200,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H,
+      });
+
+      function generateQRCode() {
+        const text = document.getElementById("text-input").value.trim();
+        const downloadBtn = document.getElementById("download-btn");
+
+        if (text === "") {
+          qrcode.clear();
+          document.getElementById("qrcode").innerHTML = "";
+          downloadBtn.style.display = "none";
+          return;
+        }
+
+        qrcode.makeCode(text);
+        downloadBtn.style.display = "block";
+      }
+
+      function downloadQRCode() {
+        const img = document.querySelector("#qrcode img");
+        const canvas = document.querySelector("#qrcode canvas");
+        let imageSrc = "";
+
+        if (img && img.src) {
+          imageSrc = img.src;
+        } else if (canvas) {
+          imageSrc = canvas.toDataURL("image/png");
+        }
+
+        if (imageSrc) {
+          const link = document.createElement("a");
+          link.href = imageSrc;
+          link.download = "qrcode.png";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
+    </script>
+  </body>
+</html>
