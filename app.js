@@ -273,24 +273,46 @@ function initMap() {
 
 function updateMapTileLayer() {
   if (currentTileLayer) {
+    // Rimuove il layer corrente dalla mappa, che sia un singolo layer o un gruppo
     map.removeLayer(currentTileLayer);
   }
 
-  // Ripristino degli stili mappa CARTO (Stamen non è più gratuito)
-  const lightTiles =
-    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png";
-  const darkTiles =
-    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png";
-  const attribution =
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  let tileUrl, attribution;
 
-  const tileUrl = isDarkTheme ? darkTiles : lightTiles;
+  if (isDarkTheme) {
+    // Tema scuro: Ibrido Satellitare con etichette scure per un look moderno
+    const imageryLayer = L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      {
+        attribution:
+          "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+      },
+    );
+    const labelsLayer = L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: "abcd",
+        pane: "shadowPane", // Assicura che le etichette stiano sopra l'immagine
+      },
+    );
+    currentTileLayer = L.layerGroup([imageryLayer, labelsLayer]).addTo(map);
+  } else {
+    // Tema chiaro: OpenTopoMap per evidenziare vegetazione e sentieri
+    tileUrl = "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png";
+    attribution =
+      'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)';
+    currentTileLayer = L.tileLayer(tileUrl, {
+      attribution: attribution,
+      subdomains: "abc",
+      maxNativeZoom: 17, // OpenTopoMap ha tile nativi solo fino a zoom 17
+      maxZoom: 21,
+    }).addTo(map);
+  }
 
-  currentTileLayer = L.tileLayer(tileUrl, {
-    attribution: attribution,
-    subdomains: "abcd",
-    maxZoom: 21,
-  }).addTo(map);
+  // Assicura che il pannello delle etichette sia visibile
+  map.getPane("shadowPane").style.zIndex = 650;
 }
 
 // --- 5. Marker Generator ---
@@ -311,8 +333,8 @@ function renderMarkers() {
       colorHex = "#22c55e";
       colorRGB = "34, 197, 94";
     } else if (plant.category === "herbs") {
-      colorHex = "#84cc16";
-      colorRGB = "132, 204, 22";
+      colorHex = "#4ade80"; // Verde più brillante per un miglior contrasto
+      colorRGB = "74, 222, 128";
     } else if (plant.category === "exotics") {
       colorHex = "#a855f7";
       colorRGB = "168, 85, 247";
@@ -910,21 +932,22 @@ questModal.addEventListener("click", (e) => {
 });
 
 // --- 12. Theme Manager (Dark / Light Mode) ---
-themeToggle.addEventListener("click", () => {
-  isDarkTheme = !isDarkTheme;
-  document.body.classList.toggle("light-mode");
-
-  // Switch theme toggle icon
+function applyTheme() {
   const icon = themeToggle.querySelector("i");
   if (isDarkTheme) {
+    document.body.classList.remove("light-mode");
     icon.setAttribute("data-lucide", "sun");
   } else {
+    document.body.classList.add("light-mode");
     icon.setAttribute("data-lucide", "moon");
   }
-  lucide.createIcons();
-
-  // Reload styled map tiles
+  lucide.createIcons(); // Spostato qui per garantire la sincronizzazione
   updateMapTileLayer();
+}
+
+themeToggle.addEventListener("click", () => {
+  isDarkTheme = !isDarkTheme;
+  applyTheme();
 });
 
 // --- 13. Deep Linking ---
@@ -950,6 +973,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMarkers();
   initQuestTracker();
   handleDeepLink(); // Controlla se c'è un link diretto a una pianta
+  applyTheme(); // Applica il tema corretto (chiaro) all'avvio
   lucide.createIcons();
 
   // Ascolta le modifiche all'hash per aggiornare la selezione della pianta dinamicamente
