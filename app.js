@@ -12,6 +12,7 @@ const PLANTS_DATABASE = [
     family: "Cupressaceae",
     category: "trees",
     rarity: "common",
+    diameter: "large",
     coordinates: [45.420424, 11.042593],
     sunlight: "Sole Diretto",
     water: "Moderata",
@@ -30,6 +31,7 @@ const PLANTS_DATABASE = [
     family: "Cannaceae",
     category: "flowers",
     rarity: "common",
+    diameter: "medium",
     coordinates: [45.419603, 11.040126],
     sunlight: "Sole Diretto",
     water: "Moderata",
@@ -48,6 +50,7 @@ const PLANTS_DATABASE = [
     family: "Magnoliaceae",
     category: "trees",
     rarity: "common",
+    diameter: "large",
     coordinates: [45.4231, 11.044115],
     sunlight: "Sole o Mezz'ombra",
     water: "Moderata",
@@ -66,6 +69,7 @@ const PLANTS_DATABASE = [
     family: "Pinaceae",
     category: "trees",
     rarity: "common",
+    diameter: "large",
     coordinates: [45.420402, 11.042141],
     sunlight: "Sole o Mezz'ombra",
     water: "Moderata",
@@ -84,6 +88,7 @@ const PLANTS_DATABASE = [
     family: "Pinaceae",
     category: "exotics",
     rarity: "rare",
+    diameter: "large",
     coordinates: [45.41963, 11.040851],
     sunlight: "Sole Diretto",
     water: "Bassa",
@@ -102,6 +107,7 @@ const PLANTS_DATABASE = [
     family: "Pinaceae",
     category: "trees",
     rarity: "common",
+    diameter: "large",
     coordinates: [45.419586, 11.040746],
     sunlight: "Sole Diretto",
     water: "Bassa",
@@ -120,6 +126,7 @@ const PLANTS_DATABASE = [
     family: "Platanaceae",
     category: "trees",
     rarity: "common",
+    diameter: "large",
     coordinates: [45.420223, 11.036481],
     sunlight: "Sole Diretto",
     water: "Moderata",
@@ -138,6 +145,7 @@ const PLANTS_DATABASE = [
     family: "Salicaceae",
     category: "trees",
     rarity: "common",
+    diameter: "large",
     coordinates: [45.420385, 11.037437],
     sunlight: "Sole Diretto",
     water: "Alta",
@@ -156,6 +164,7 @@ const PLANTS_DATABASE = [
     family: "Salicaceae",
     category: "trees",
     rarity: "common",
+    diameter: "large",
     coordinates: [45.420462, 11.037612],
     sunlight: "Sole Diretto",
     water: "Alta",
@@ -174,6 +183,7 @@ const PLANTS_DATABASE = [
     family: "Lauraceae",
     category: "herbs",
     rarity: "common",
+    diameter: "small",
     coordinates: [45.421091, 11.041863],
     sunlight: "Sole o Mezz'ombra",
     water: "Bassa",
@@ -308,15 +318,27 @@ function renderMarkers() {
       colorRGB = "168, 85, 247";
     }
 
+    // Determine marker size class from diameter
+    let sizeClass = "marker-medium"; // Default
+    if (plant.diameter === "small") {
+      sizeClass = "marker-small";
+    } else if (plant.diameter === "large") {
+      sizeClass = "marker-large";
+    }
+
+    // Set icon size for clickable area
+    const iconSizeMap = { small: 28, medium: 36, large: 44 };
+    const size = iconSizeMap[plant.diameter] || 36;
+
     // Custom CSS DivIcon for visual wow factor
     const customIcon = L.divIcon({
-      className: `pulsing-marker plant-id-${plant.id}`,
+      className: `pulsing-marker ${sizeClass} plant-id-${plant.id}`,
       html: `
         <div class="marker-pin" style="background-color: ${colorHex};"></div>
         <div class="marker-ring" style="background-color: ${colorHex}; --marker-color-rgb: ${colorRGB};"></div>
       `,
-      iconSize: [36, 36],
-      iconAnchor: [18, 18],
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
     });
 
     const marker = L.marker(plant.coordinates, { icon: customIcon }).addTo(map);

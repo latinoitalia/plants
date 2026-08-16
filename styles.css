@@ -121,21 +121,32 @@ body.light-mode .leaflet-control-attribution {
   justify-content: center;
 }
 
-.marker-pin {
-  width: 20px;
-  height: 20px;
+/* Default marker size (medium) */
+.marker-medium .marker-pin { width: 20px; height: 20px; }
+.marker-medium .marker-ring { width: 36px; height: 36px; }
+
+/* Small marker size */
+.marker-small .marker-pin { width: 14px; height: 14px; }
+.marker-small .marker-ring { width: 28px; height: 28px; }
+
+/* Large marker size */
+.marker-large .marker-pin { width: 24px; height: 24px; }
+.marker-large .marker-ring { width: 44px; height: 44px; }
+
+.marker-pin { 
   border-radius: 50%;
   border: 3px solid #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.4);
   position: relative;
   z-index: 2;
   transition: var(--transition-spring);
-}
+} 
+
+.marker-small .marker-pin { border-width: 2px; }
+.marker-large .marker-pin { border-width: 4px; }
 
 .marker-ring {
   position: absolute;
-  width: 36px;
-  height: 36px;
   border-radius: 50%;
   animation: marker-pulse 2s infinite ease-out;
   z-index: 1;
