@@ -526,6 +526,15 @@ function closeDrawer() {
     if (prevEl) prevEl.classList.remove("active-marker");
     activeMarkerId = null;
     selectedPlant = null;
+
+    // Rimuove l'hash dall'URL senza attivare l'evento hashchange,
+    // per evitare che il drawer si riapra immediatamente.
+    // Il terzo parametro (URL) è supportato dai browser moderni.
+    history.pushState(
+      "",
+      document.title,
+      window.location.pathname + window.location.search,
+    );
   }
 }
 
@@ -981,14 +990,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   map.on("click", (e) => {
     // If user clicks on map (not a marker) close the drawer
-    closeDrawer();
-
-    // Reset active marker highlight
-    if (activeMarkerId) {
-      const prevEl = document.querySelector(`.plant-id-${activeMarkerId}`);
-      if (prevEl) prevEl.classList.remove("active-marker");
-      activeMarkerId = null;
-      selectedPlant = null;
-    }
+    closeDrawer(); // This function now handles all cleanup logic
   });
 });
