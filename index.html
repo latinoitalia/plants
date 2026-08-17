@@ -53,13 +53,6 @@
             <i data-lucide="sprout" class="brand-icon"></i>
             <h1>Bosco Buri</h1>
           </div>
-          <button
-            id="theme-toggle"
-            class="hud-btn glass-btn"
-            aria-label="Toggle Theme"
-          >
-            <i data-lucide="moon"></i>
-          </button>
         </div>
 
         <!-- Search and Filter Bar -->
@@ -102,15 +95,6 @@
 
       <!-- Floating HUD Buttons (Right-side Actions) -->
       <div class="floating-controls-right">
-        <button
-          id="quest-toggle"
-          class="floating-btn glass-btn"
-          aria-label="Flora Quest Checklist"
-        >
-          <div class="quest-progress-badge">0%</div>
-          <i data-lucide="trophy"></i>
-        </button>
-
         <button
           id="btn-locate"
           class="floating-btn glass-btn highlight"
@@ -212,78 +196,13 @@
                 <i data-lucide="volume-2" class="audio-icon"></i>
                 <span id="audio-btn-text">Ascolta la Guida</span>
               </button>
-              <button
-                id="btn-checkin"
-                class="action-btn primary-action"
-                aria-label="Registra questa pianta"
-              >
-                <i data-lucide="check-circle-2"></i>
-                <span>Trovata! Registra</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scavenger Hunt / Quest Modal -->
-      <div
-        id="quest-modal"
-        class="modal-overlay hidden"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="quest-modal-title"
-      >
-        <div class="modal-card glass">
-          <header class="modal-header">
-            <div class="modal-title-wrap">
-              <i data-lucide="compass" class="modal-title-icon"></i>
-              <h2 id="quest-modal-title">Sfida Bosco Buri</h2>
-            </div>
-            <button
-              id="close-quest"
-              class="close-modal-btn"
-              aria-label="Chiudi Finestra Sfida"
-            >
-              <i data-lucide="x"></i>
-            </button>
-          </header>
-
-          <div class="modal-body">
-            <div class="quest-summary-panel">
-              <p>
-                Esplora i sentieri di Bosco Buri e trova le 15 piante storiche
-                catalogate. Effettua la registrazione in ogni punto per
-                completare il percorso.
-              </p>
-              <div class="quest-progress-bar-container">
-                <div class="quest-progress-labels">
-                  <span>Progresso</span>
-                  <span id="quest-progress-text">0 / 15 Piante Trovate</span>
-                </div>
-                <div class="quest-progress-bar">
-                  <div id="quest-progress-fill" style="width: 0%"></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="quest-checklist-wrapper">
-              <h3>Checklist Botanica</h3>
-              <ul id="quest-list" class="quest-list">
-                <!-- Dynamically populated checklist -->
-              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Lucide Icon Library -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <!-- App JS -->
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
   </body>
 </html>

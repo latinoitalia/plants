@@ -2,6 +2,9 @@
    FloraFind Application Logic - Villa Buri Park, Verona
    ========================================================================== */
 
+import L from "https://esm.sh/leaflet";
+import { createIcons, icons } from "https://esm.sh/lucide";
+
 // --- 1. Plant Database ---
 // 45.420424, 11.042593
 const PLANTS_DATABASE = [
@@ -205,11 +208,7 @@ let selectedPlant = null;
 let activeMarkerId = null;
 let userMarker = null;
 let userAccuracyCircle = null;
-let isDarkTheme = false;
 let isFirstLocationUpdate = true;
-let visitedPlants = JSON.parse(
-  localStorage.getItem("florafind_visited") || "[]",
-);
 let currentSearch = "";
 let currentCategory = "all";
 
@@ -221,15 +220,7 @@ let isSpeaking = false;
 const searchInput = document.getElementById("plant-search");
 const clearSearchBtn = document.getElementById("clear-search");
 const chipsContainer = document.getElementById("filter-chips");
-const themeToggle = document.getElementById("theme-toggle");
 const locateBtn = document.getElementById("btn-locate");
-const questToggle = document.getElementById("quest-toggle");
-const questModal = document.getElementById("quest-modal");
-const closeQuestBtn = document.getElementById("close-quest");
-const questList = document.getElementById("quest-list");
-const questProgressText = document.getElementById("quest-progress-text");
-const questProgressFill = document.getElementById("quest-progress-fill");
-const questBadge = document.querySelector(".quest-progress-badge");
 
 // Drawer elements
 const drawer = document.getElementById("detail-drawer");
@@ -248,7 +239,6 @@ const statHeight = document.getElementById("stat-height");
 const statOrigin = document.getElementById("stat-origin");
 const audioBtn = document.getElementById("btn-audio-guide");
 const audioBtnText = document.getElementById("audio-btn-text");
-const checkinBtn = document.getElementById("btn-checkin");
 
 // --- 4. Map Initialization ---
 function initMap() {
@@ -277,42 +267,16 @@ function updateMapTileLayer() {
     map.removeLayer(currentTileLayer);
   }
 
-  let tileUrl, attribution;
-
-  if (isDarkTheme) {
-    // Tema scuro: Ibrido Satellitare con etichette scure per un look moderno
-    const imageryLayer = L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      {
-        attribution:
-          "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
-      },
-    );
-    const labelsLayer = L.tileLayer(
-      "https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png",
-      {
-        attribution:
-          '&copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: "abcd",
-        pane: "shadowPane", // Assicura che le etichette stiano sopra l'immagine
-      },
-    );
-    currentTileLayer = L.layerGroup([imageryLayer, labelsLayer]).addTo(map);
-  } else {
-    // Tema chiaro: OpenTopoMap per evidenziare vegetazione e sentieri
-    tileUrl = "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png";
-    attribution =
-      'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)';
-    currentTileLayer = L.tileLayer(tileUrl, {
-      attribution: attribution,
-      subdomains: "abc",
-      maxNativeZoom: 17, // OpenTopoMap ha tile nativi solo fino a zoom 17
-      maxZoom: 21,
-    }).addTo(map);
-  }
-
-  // Assicura che il pannello delle etichette sia visibile
-  map.getPane("shadowPane").style.zIndex = 650;
+  // Tema chiaro: OpenTopoMap per evidenziare vegetazione e sentieri
+  const tileUrl = "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png";
+  const attribution =
+    'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)';
+  currentTileLayer = L.tileLayer(tileUrl, {
+    attribution: attribution,
+    subdomains: "abc",
+    maxNativeZoom: 17, // OpenTopoMap ha tile nativi solo fino a zoom 17
+    maxZoom: 21,
+  }).addTo(map);
 }
 
 // --- 5. Marker Generator ---
@@ -436,9 +400,6 @@ function populateDrawer(plant) {
       <span class="plant-card-family">${plant.family}</span>
     </div>
   `;
-
-  // Update check-in button state
-  updateCheckinButtonState();
 
   // Reset Audio Guide
   stopSpeech();
@@ -778,187 +739,6 @@ if ("speechSynthesis" in window) {
   window.speechSynthesis.onvoiceschanged = () => {};
 }
 
-// --- 11. Scavenger Hunt / Quest Tracker ---
-function initQuestTracker() {
-  renderQuestList();
-  updateQuestProgress();
-}
-
-function updateQuestProgress() {
-  const total = PLANTS_DATABASE.length;
-  const count = visitedPlants.length;
-  const pct = total > 0 ? Math.round((count / total) * 100) : 0;
-
-  questBadge.innerText = `${pct}%`;
-  questProgressText.innerText = `${count} / ${total} Piante Trovate`;
-  questProgressFill.style.width = `${pct}%`;
-
-  // Highlight trophy button if completed
-  if (pct === 100) {
-    questToggle.classList.add("highlight");
-  }
-}
-
-function renderQuestList() {
-  questList.innerHTML = "";
-
-  PLANTS_DATABASE.forEach((plant) => {
-    const isVisited = visitedPlants.includes(plant.id);
-    const li = document.createElement("li");
-    li.className = `quest-item ${isVisited ? "completed" : ""}`;
-
-    li.innerHTML = `
-      <div class="quest-item-info">
-        <span class="quest-item-name">${plant.name}</span>
-        <span class="quest-item-scientific">${plant.scientificName}</span>
-      </div>
-      <span class="quest-check ${isVisited ? "checked" : "pending"}">
-        ${isVisited ? '<i data-lucide="check-circle-2"></i>' : '<i data-lucide="circle"></i>'}
-      </span>
-    `;
-
-    li.addEventListener("click", () => {
-      questModal.classList.add("hidden");
-      selectPlant(plant);
-    });
-
-    questList.appendChild(li);
-  });
-
-  // Refresh Lucide Icons inside dynamic elements
-  lucide.createIcons();
-}
-
-function updateCheckinButtonState() {
-  if (!selectedPlant) return;
-
-  const isVisited = visitedPlants.includes(selectedPlant.id);
-
-  if (isVisited) {
-    checkinBtn.disabled = true;
-    checkinBtn.className = "action-btn primary-action disabled";
-    checkinBtn.innerHTML =
-      '<i data-lucide="check-circle-2"></i> <span>Registrata!</span>';
-  } else {
-    checkinBtn.disabled = false;
-    checkinBtn.className = "action-btn primary-action";
-    checkinBtn.innerHTML =
-      '<i data-lucide="plus-circle"></i> <span>Trovata! Registra</span>';
-  }
-  lucide.createIcons();
-}
-
-checkinBtn.addEventListener("click", () => {
-  if (!selectedPlant) return;
-
-  if (!visitedPlants.includes(selectedPlant.id)) {
-    visitedPlants.push(selectedPlant.id);
-    localStorage.setItem("florafind_visited", JSON.stringify(visitedPlants));
-
-    // Trigger checkin animations and progress
-    updateQuestProgress();
-    renderQuestList();
-    updateCheckinButtonState();
-
-    // Check if fully completed
-    if (visitedPlants.length === PLANTS_DATABASE.length) {
-      triggerConfettiCelebration();
-    }
-  }
-});
-
-function triggerConfettiCelebration() {
-  // Create virtual confetti particles overlaying map
-  const celebrateDiv = document.createElement("div");
-  celebrateDiv.className = "celebrate-popup active";
-  celebrateDiv.innerHTML = `
-    <i data-lucide="party-popper" style="width: 48px; height: 48px; color: #d97706;"></i>
-    <h3 style="font-family: var(--font-heading); font-size: 24px; color: var(--accent-gold);">Sfida Completata!</h3>
-    <p style="font-size: 14px; text-align: center; color: var(--text-secondary);">Congratulazioni! Hai trovato tutte le 15 piante storiche a Bosco Buri!</p>
-  `;
-  document.body.appendChild(celebrateDiv);
-  lucide.createIcons();
-
-  // Custom particle generator
-  for (let i = 0; i < 60; i++) {
-    createConfettiParticle();
-  }
-
-  setTimeout(() => {
-    celebrateDiv.remove();
-  }, 4000);
-}
-
-function createConfettiParticle() {
-  const p = document.createElement("div");
-  p.style.position = "absolute";
-  p.style.width = `${Math.random() * 8 + 5}px`;
-  p.style.height = `${Math.random() * 8 + 5}px`;
-
-  const colors = ["#10b981", "#ec4899", "#f59e0b", "#3b82f6", "#a855f7"];
-  p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-  p.style.left = `${Math.random() * 100}vw`;
-  p.style.top = "-20px";
-  p.style.borderRadius = "50%";
-  p.style.zIndex = "100";
-  p.style.pointerEvents = "none";
-
-  document.body.appendChild(p);
-
-  const duration = Math.random() * 3 + 2;
-  const xOffset = (Math.random() - 0.5) * 200;
-
-  p.animate(
-    [
-      { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
-      {
-        transform: `translate(${xOffset}px, 105vh) rotate(${Math.random() * 360}deg)`,
-        opacity: 0,
-      },
-    ],
-    {
-      duration: duration * 1000,
-      easing: "cubic-bezier(0.1, 0.8, 0.3, 1)",
-    },
-  );
-
-  setTimeout(() => p.remove(), duration * 1000);
-}
-
-questToggle.addEventListener("click", () => {
-  renderQuestList();
-  questModal.classList.remove("hidden");
-});
-
-closeQuestBtn.addEventListener("click", () => {
-  questModal.classList.add("hidden");
-});
-
-questModal.addEventListener("click", (e) => {
-  if (e.target === questModal) {
-    questModal.classList.add("hidden");
-  }
-});
-
-// --- 12. Theme Manager (Dark / Light Mode) ---
-function applyTheme() {
-  const icon = themeToggle.querySelector("i");
-  if (isDarkTheme) {
-    document.body.classList.remove("light-mode");
-    icon.setAttribute("data-lucide", "sun");
-  } else {
-    document.body.classList.add("light-mode");
-    icon.setAttribute("data-lucide", "moon");
-  }
-  lucide.createIcons(); // Spostato qui per garantire la sincronizzazione
-  updateMapTileLayer();
-}
-
-themeToggle.addEventListener("click", () => {
-  isDarkTheme = !isDarkTheme;
-  applyTheme();
-});
-
 // --- 13. Deep Linking ---
 function handleDeepLink() {
   const hash = window.location.hash;
@@ -976,20 +756,19 @@ function handleDeepLink() {
   }
 }
 
-// Close drawer if clicking empty areas of the map
+// Inizializzazione principale dell'app
 document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add("light-mode"); // Applica sempre il tema chiaro
   initMap();
   renderMarkers();
-  initQuestTracker();
   handleDeepLink(); // Controlla se c'è un link diretto a una pianta
-  applyTheme(); // Applica il tema corretto (chiaro) all'avvio
-  lucide.createIcons();
+  createIcons({ icons }); // Crea tutte le icone iniziali
 
   // Ascolta le modifiche all'hash per aggiornare la selezione della pianta dinamicamente
   window.addEventListener("hashchange", handleDeepLink);
 
   map.on("click", (e) => {
-    // If user clicks on map (not a marker) close the drawer
+    // Se l'utente clicca sulla mappa (non su un marcatore), chiudi il cassetto
     closeDrawer(); // This function now handles all cleanup logic
   });
 });

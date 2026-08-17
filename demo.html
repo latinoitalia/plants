@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Icone Lucide</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        background-color: #f0f0f0;
+      }
+      /* Stile per i segnaposto delle icone */
+      i[data-lucide] {
+        display: inline-block;
+        width: 48px; /* Imposta una larghezza */
+        height: 48px; /* Imposta un'altezza */
+        margin: 10px; /* Aggiunge un po' di spazio attorno */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Demo delle Icone Lucide</h1>
+    <p>
+      Ecco alcuni esempi di icone che puoi usare. Basta usare il tag
+      <code>&lt;i data-lucide="NOME-ICONA"&gt;&lt;/i&gt;</code>. (Ho
+      ripristinato l'uso di `i` perché è semanticamente corretto per le icone).
+    </p>
+
+    <!-- Esempi di icone -->
+    <i data-lucide="home"></i>
+    <i data-lucide="settings"></i>
+    <i data-lucide="user"></i>
+    <i data-lucide="sprout"></i>
+    <i data-lucide="navigation"></i>
+
+    <!-- Importa e attiva Lucide usando i moduli ES6 (approccio moderno e affidabile) -->
+    <script type="module">
+      import { createIcons, icons } from "https://esm.sh/lucide";
+
+      createIcons({ icons });
+    </script>
+  </body>
+</html>
