@@ -67,7 +67,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 100%; /* Assicura che il contenitore riempia l'intera altezza */
+  height: 100dvh; /* Usa l'altezza dinamica del viewport per la massima compatibilità mobile */
   display: flex;
   flex-direction: column;
 }
