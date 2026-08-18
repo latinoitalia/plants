@@ -52,21 +52,16 @@ html {
 }
 
 body {
+  position: fixed; /* Impedisce lo scroll del body */
+  inset: 0; /* Equivalente a top/right/bottom/left: 0 */
   font-family: var(--font-sans);
   background: var(--bg-app);
   color: var(--text-primary);
-  height: 100%;
-  height: -webkit-fill-available;
   overflow: hidden;
   transition: background-color 0.4s ease;
 }
 
 #app-container {
-  position: relative; /* Usa il posizionamento relativo per mantenere il flusso */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   height: 100dvh; /* Usa l'altezza dinamica del viewport per la massima compatibilità mobile */
   display: flex;
   flex-direction: column;
