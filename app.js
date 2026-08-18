@@ -168,7 +168,7 @@ const PLANTS_DATABASE = [
     category: "trees",
     rarity: "common",
     diameter: "large",
-    coordinates: [45.420462, 11.037612],
+    coordinates: [45.420423, 11.037648],
     sunlight: "Sole Diretto",
     water: "Alta",
     height: ">30m",
@@ -197,6 +197,63 @@ const PLANTS_DATABASE = [
       "Le sue foglie venivano usate nell'antichità per creare corone per poeti e vincitori, simbolo di saggezza e gloria.",
     description:
       "Arbusto sempreverde aromatico, tipico della macchia mediterranea. Le sue foglie lucide e coriacee sono ampiamente utilizzate in cucina per insaporire piatti. Può crescere come un piccolo albero se non potato.",
+  },
+  {
+    id: "gardenia",
+    name: "Gardenia",
+    scientificName: "Gardenia jasminoides",
+    family: "Rubiaceae",
+    category: "flowers",
+    rarity: "common",
+    diameter: "medium",
+    coordinates: [45.41891397500736, 11.0397],
+    sunlight: "Mezz'ombra",
+    water: "Alta",
+    height: "2m",
+    nativeTo: "Asia Orientale",
+    image: "Gardenia.jfif",
+    funFact:
+      "I fiori di gardenia sono famosi per il loro profumo intenso e inebriante, spesso utilizzato in profumeria e per creare bouquet da sposa.",
+    description:
+      "Arbusto sempreverde originario dell'Asia, amato per i suoi fiori bianchi cerosi e intensamente profumati che sbocciano in primavera ed estate. Le foglie sono lucide e di un verde scuro, creando un bellissimo contrasto con i fiori.",
+  },
+  {
+    id: "pungitopo",
+    name: "Pungitopo",
+    scientificName: "Ruscus aculeatus",
+    family: "Asparagaceae",
+    category: "herbs",
+    rarity: "common",
+    diameter: "small",
+    coordinates: [45.4179, 11.0428],
+    sunlight: "Mezz'ombra",
+    water: "Bassa",
+    height: "<1m",
+    nativeTo: "Europa",
+    image: "Pungitopo.jfif",
+    funFact:
+      "Le bacche rosse in realtà non crescono sulle foglie, ma su speciali fusti appiattiti chiamati cladodi, che hanno l'aspetto di foglie.",
+    description:
+      "Piccolo arbusto sempreverde noto per le sue 'foglie' rigide e appuntite (in realtà fusti modificati) e per le sue bacche rosse brillanti che maturano in inverno, rendendolo una popolare decorazione natalizia.",
+  },
+  {
+    id: "11",
+    name: "Cedro",
+    scientificName: "Cedrus deodara",
+    family: "Pinaceae",
+    category: "trees",
+    rarity: "common",
+    diameter: "large",
+    coordinates: [45.4207, 11.0426],
+    sunlight: "Sole Diretto",
+    water: "Bassa",
+    height: "30m",
+    nativeTo: "Asia (Himalaya)",
+    image: "cedro.png",
+    funFact:
+      "Il suo nome 'Deodara' deriva dal sanscrito e significa 'legno degli dei', sottolineando la sua importanza culturale e spirituale nelle regioni d'origine.",
+    description:
+      "Specie esotica ornamentale originaria dell’Asia. Apprezzata per il portamento elegante e la resistenza, è utilizzata in parchi e grandi giardini. Questo esemplare si trova vicino alla maestosa Sequoia.",
   },
 ];
 
