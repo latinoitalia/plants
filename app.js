@@ -97,7 +97,7 @@ const PLANTS_DATABASE = [
     water: "Bassa",
     height: "30m",
     nativeTo: "Asia (Himalaya)",
-    image: "cedro.png",
+    image: "cedro.jfif",
     funFact:
       "Il suo nome 'Deodara' deriva dal sanscrito e significa 'legno degli dei', sottolineando la sua importanza culturale e spirituale nelle regioni d'origine.",
     description:
@@ -116,7 +116,7 @@ const PLANTS_DATABASE = [
     water: "Bassa",
     height: ">30m",
     nativeTo: "Area Mediterranea",
-    image: "pino.png",
+    image: "pino.jfif",
     funFact:
       "I suoi semi, i pinoli, sono un ingrediente pregiato in molte cucine mediterranee, dal pesto alla pasticceria.",
     description:
