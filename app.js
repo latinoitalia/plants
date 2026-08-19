@@ -675,7 +675,7 @@ function locateUser() {
       locateBtn.classList.remove("loading-pulse");
       alert("Impossibile accedere alla tua posizione GPS.");
     },
-    { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 },
+    { enableHighAccuracy: true, maximumAge: 10000, timeout: 10000 },
   );
 }
 
@@ -820,6 +820,9 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMarkers();
   handleDeepLink(); // Controlla se c'è un link diretto a una pianta
   createIcons({ icons }); // Crea tutte le icone iniziali
+
+  // Assicura che il pulsante GPS non sia evidenziato all'avvio
+  locateBtn.classList.remove("highlight", "loading-pulse");
 
   // Ascolta le modifiche all'hash per aggiornare la selezione della pianta dinamicamente
   window.addEventListener("hashchange", handleDeepLink);
